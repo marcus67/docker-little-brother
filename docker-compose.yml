@@ -1,0 +1,76 @@
+#    Copyright (C) 2020  Marcus Rickert
+#
+#    See https://github.com/marcus67/docker-little-brother
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation; either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License along
+#    with this program; if not, write to the Free Software Foundation, Inc.,
+#    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+  version: '3.4'
+  services:
+    slave:
+      image: marcusrickert/little-brother-slave:${RELEASE:-latest}
+      container_name: little-brother-slave-${HOSTNAME:-localhost}
+      domainname: docker
+      restart: always
+      hostname: little-brother-slave-${HOSTNAME:-localhost}
+      environment:
+        - "MASTER_HOST_URL=${MASTER_HOST_URL}"
+        - "MASTER_ACCESS_TOKEN=${MASTER_ACCESS_TOKEN}"
+        - "APP_SECRET=${APP_SECRET}"
+        - "LOGLEVEL=${LOGLEVEL}"
+      volumes:
+        # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes
+        - "/etc/localtime:/etc/localtime:ro"
+      pid: host
+      privileged: true
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:5555/health"]
+        interval: 30s
+        timeout: 5s
+        retries: 3
+        start_period: 10s
+#      cap_add:
+#        - CAP_KILL
+#        - CAP_SETUID
+#        - CAP_SETGID
+#        - CAP_SETPCAP
+#        - CAP_SETFCAP
+
+    legacy-slave:
+      image: marcusrickert/little-brother-slave:${RELEASE:-latest}
+      container_name: little-brother-legacy-slave-${HOSTNAME:-localhost}
+      domainname: docker
+      restart: always
+      hostname: little-brother-slave-${HOSTNAME:-localhost}
+      environment:
+        - "MASTER_HOST_URL=${MASTER_HOST_URL}"
+        - "MASTER_ACCESS_TOKEN=${MASTER_ACCESS_TOKEN}"
+        - "APP_SECRET=${APP_SECRET}"
+        - "LOGLEVEL=${LOGLEVEL}"
+        - "DISPLAY=${DISPLAY}"
+      volumes:
+        # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes
+        - "/etc/localtime:/etc/localtime:ro"
+        - "/tmp/.X11-unix:/tmp/.X11-unix"
+        - "/etc/asound.conf:/etc/asound.conf"
+      devices:
+        - "/dev/snd:/dev/snd"
+      pid: host
+      privileged: true
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:5555/health"]
+        interval: 30s
+        timeout: 5s
+        retries: 3
+        start_period: 10s
