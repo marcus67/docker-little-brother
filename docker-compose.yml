@@ -19,7 +19,7 @@
   version: '3.4'
   services:
     slave:
-      image: marcusrickert/little-brother-slave:${RELEASE:-latest}
+      image: ${DOCKER_REGISTRY}/${DOCKER_ORG_UNIT}/little-brother-slave:${RELEASE:-latest}
       container_name: little-brother-slave-${HOSTNAME:-localhost}
       domainname: docker
       restart: always

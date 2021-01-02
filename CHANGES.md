@@ -5,6 +5,10 @@
 
 This document lists all changes of `docker-little-brother` with the most recent changes at the top.
 
+## Version 0.1.1 (January 2nd, 2021)
+
+*   Support different Docker registries
+
 ## Version 0.1.0 (September 30th, 2020)
 
 *   Initial version 
