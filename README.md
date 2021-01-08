@@ -5,7 +5,7 @@
 
 ## Overview
 
-Currently, there is a [docker image](https://hub.docker.com/repository/docker/marcusrickert/little-brother-slave) 
+There is a [docker image](https://hub.docker.com/repository/docker/marcusrickert/little-brother-slave) 
 available to run a LittleBrother slave process. The easiest way to use it start as follows:
  
 *   Download the [docker-compose.yml](docker/docker-compose.yml) file from GitHub and store in a local directory.
