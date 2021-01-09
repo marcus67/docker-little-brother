@@ -20,10 +20,9 @@
   services:
     slave:
       image: ${DOCKER_REGISTRY}/${DOCKER_ORG_UNIT}/little-brother-slave:${RELEASE:-latest}
-      container_name: little-brother-slave-${HOSTNAME:-localhost}
-      domainname: docker
+      container_name: little-brother-slave${CONTAINER_NAME_EXTENSION}
       restart: always
-      hostname: little-brother-slave-${HOSTNAME:-localhost}
+      hostname: ${HOSTNAME}
       environment:
         - "MASTER_HOST_URL=${MASTER_HOST_URL}"
         - "MASTER_ACCESS_TOKEN=${MASTER_ACCESS_TOKEN}"
@@ -51,10 +50,9 @@
 
     legacy-slave:
       image: marcusrickert/little-brother-slave:${RELEASE:-latest}
-      container_name: little-brother-legacy-slave-${HOSTNAME:-localhost}
-      domainname: docker
+      container_name: little-brother-legacy-slave${CONTAINER_NAME_EXTENSION}
       restart: always
-      hostname: little-brother-slave-${HOSTNAME:-localhost}
+      hostname: ${HOSTNAME}
       environment:
         - "MASTER_HOST_URL=${MASTER_HOST_URL}"
         - "MASTER_ACCESS_TOKEN=${MASTER_ACCESS_TOKEN}"
